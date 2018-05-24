@@ -1,0 +1,49 @@
+CREATE TABLE Users
+(
+	UserID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
+	UserFirstName VARCHAR(50) NOT NULL,
+	UserLastName VARCHAR(50) NOT NULL
+)
+GO
+
+CREATE TABLE UserContactInfo
+(
+	UserContactInfoID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
+	UserID INT NOT NULL,
+	UserPhone VARCHAR(25) NULL,
+	UserEmail VARCHAR(50) NOT NULL	
+)
+GO
+
+ALTER TABLE UserContactInfo ADD FOREIGN KEY (UserID) REFERENCES Users(UserID);
+GO
+
+CREATE TABLE Student
+(
+	StudentID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
+	StudentFirstName VARCHAR(50) NOT NULL,
+	StudentLastName VARCHAR(50) NOT NULL,
+)
+GO
+
+CREATE TABLE StudentContactInfo
+(
+	StudentContactInfoID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	StudentID INT NOT NULL,
+	StudentPhone VARCHAR(50) NULL,
+	StudentEmail VARCHAR(100) NOT NULL
+)
+GO
+
+ALTER TABLE StudentContactInfo ADD FOREIGN KEY (StudentID) REFERENCES Student(StudentID);
+GO
+
+CREATE TABLE StudentUsers
+(
+	StudentID INT NOT NULL,
+	UserID INT NOT NULL
+)
+
+ALTER TABLE StudentUsers ADD FOREIGN KEY (StudentID) REFERENCES Student(StudentID);
+ALTER TABLE StudentUsers ADD FOREIGN KEY (Users) REFERENCES Student(UserID);
+GO
