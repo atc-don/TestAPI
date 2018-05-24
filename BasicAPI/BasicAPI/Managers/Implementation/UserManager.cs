@@ -22,14 +22,14 @@ namespace BasicAPI.Managers.Implementation
             _userRepository = userRepository;
         }
 
-        public void AddUser(UserEntity user)
+        public List<UserEntity> AddUser(UserEntity user)
         {
-            _userRepository.AddUser(user);
+            return _userRepository.AddUser(user);
         }
 
-        public void EditUser(UserEntity user)
+        public UserEntity EditUser(UserEntity user)
         {
-            _userRepository.EditUser(user);
+            return _userRepository.EditUser(user);
         }
 
         public List<UserEntity> GetUsers(int studentID)

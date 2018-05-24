@@ -12,8 +12,8 @@ namespace BasicAPI.Managers.Interfaces
     {
         List<UserEntity> GetUsers(int studentID);
 
-        void AddUser(UserEntity user);
+        List<UserEntity> AddUser(UserEntity user);
 
-        void EditUser(UserEntity user);
+        UserEntity EditUser(UserEntity user);
     }
 }

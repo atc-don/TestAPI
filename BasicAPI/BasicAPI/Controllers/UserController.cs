@@ -14,12 +14,12 @@ using BasicAPI.Managers.Interfaces;
 namespace BasicAPI.Controllers
 {
     [RoutePrefix("api/Users")]
-    public class UsersController : ApiController
+    public class UserController : ApiController
     {
         private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
 
-        public UsersController(IUserManager userManager, IMapper mapper)
+        public UserController(IUserManager userManager, IMapper mapper)
         {
             if (userManager == null)
             {
@@ -67,18 +67,49 @@ namespace BasicAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid Student ID");
             }
 
+            List<UserDto> users = null;
+
             try
             {
                 UserEntity userEntity = _mapper.Map<UserEntity>(user);
 
-                _userManager.AddUser(userEntity);
+                List<UserEntity> userEntities = _userManager.AddUser(userEntity);
+
+                users = _mapper.Map<List<UserDto>>(userEntities);
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Processing Error");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, users);
+        }
+
+        [HttpPut]
+        [Route("Edit/{userID:int}")]
+        public HttpResponseMessage EditUser(UserDto user)
+        {
+            if (user == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid Student ID");
+            }
+
+            UserDto updatedUser = null;
+
+            try
+            {
+                UserEntity userEntity = _mapper.Map<UserEntity>(user);
+
+                UserEntity updatedUserEntity = _userManager.EditUser(userEntity);
+
+                updatedUser = _mapper.Map<UserDto>(updatedUserEntity);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Processing Error");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, updatedUser);
         }
     }
 }

@@ -7,19 +7,19 @@ using BasicAPI.Repositories.Interfaces;
 
 namespace BasicAPI.Repositories.Implementation
 {
-    public class UserRepository : IUserRepository
+    public class StudentRepository : IStudentRepository
     {
-        public List<UserEntity> AddUser(UserEntity user)
+        public List<StudentEntity> AddStudent(StudentEntity user)
         {
             throw new NotImplementedException();
         }
 
-        public UserEntity EditUser(UserEntity user)
+        public StudentEntity EditStudent(StudentEntity user)
         {
             throw new NotImplementedException();
         }
 
-        public List<UserEntity> GetUsers(int userID)
+        public List<StudentEntity> GetStudents(int studentID)
         {
             throw new NotImplementedException();
         }
