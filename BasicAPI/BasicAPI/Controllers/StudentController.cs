@@ -13,6 +13,7 @@ using BasicAPI.Entities;
 
 namespace BasicAPI.Controllers
 {
+    [RoutePrefix("api/Student")]
     public class StudentController : ApiController
     {
         private readonly IStudentManager _studentManager;

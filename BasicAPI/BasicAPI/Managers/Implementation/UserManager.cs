@@ -32,9 +32,9 @@ namespace BasicAPI.Managers.Implementation
             return _userRepository.EditUser(user);
         }
 
-        public List<UserEntity> GetUsers(int studentID)
+        public List<UserEntity> GetUser(int studentID)
         {
-            return _userRepository.GetUsers(studentID);
+            return _userRepository.GetUser(studentID);
         }
     }
 }

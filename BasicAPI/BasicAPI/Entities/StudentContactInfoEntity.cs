@@ -9,6 +9,8 @@ namespace BasicAPI.Entities
     {
         public int StudentContactInfoID { get; set; }
 
+        public int StudentID { get; set; }
+
         public string StudentPhone { get; set; }
 
         public string StudentEmail { get; set; }

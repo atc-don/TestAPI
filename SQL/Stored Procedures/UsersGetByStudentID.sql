@@ -7,6 +7,9 @@ GO
 -- Create date: 05/24/2018
 -- Description:	Gets Users by StudentID
 -- =============================================
+
+-- DROP PROCEDURE UsersGetByStudentID
+
 CREATE PROCEDURE UsersGetByStudentID
 				@StudentID INT 
 	
@@ -17,12 +20,17 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT 
-		u.userID,
+		u.UserID,
 		u.StudentID,
 		u.UserFirstName,
-		u.UserLastName
+		u.UserLastName,
+		uci.UserContactInfoID,
+		uci.UserEmail,
+		uci.UserPhone
 	FROM
 		Users u
+	INNER JOIN
+		UserContactInfo uci ON uci.UserID = u.UserID
 	WHERE
 		u.StudentID = @StudentID
     

@@ -6,6 +6,7 @@ using System.Web;
 
 using BasicAPI.DTOs;
 using BasicAPI.Entities;
+using BasicAPI.Models;
 
 namespace BasicAPI.App_Start
 {
@@ -19,12 +20,19 @@ namespace BasicAPI.App_Start
         /// </summary>
         public AutoMapperProfile()
         {
-            //CreateMap<DBUser, UserEntity>();
-            CreateMap<UserDto, UserEntity>().ReverseMap();
+            CreateMap<DBUser, UserEntity>()
+                .ForMember(dest=>dest.UserContacts, opt=>opt.Ignore());
+
+            CreateMap<UserDto, UserEntity>().ReverseMap();            
+            CreateMap<DBUser, UserContactInfoEntity>();
             CreateMap<UserContactInfoDto, UserContactInfoEntity>().ReverseMap();
 
-            //CreateMap<DBStudent, StudentEntity>();
-            CreateMap<StudentDto, StudentEntity>().ReverseMap();            
+            CreateMap<DBStudent, StudentEntity>()
+                .ForMember(dest => dest.StudentContacts, opt => opt.Ignore())
+                .ForMember(dest => dest.StudentUsers, opt => opt.Ignore());
+
+            CreateMap<StudentDto, StudentEntity>().ReverseMap();
+            CreateMap<DBStudent, StudentContactInfoEntity>();
             CreateMap<StudentContactInfoDto, StudentContactInfoEntity>().ReverseMap();
         }
     }

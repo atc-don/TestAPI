@@ -13,7 +13,7 @@ using BasicAPI.Managers.Interfaces;
 
 namespace BasicAPI.Controllers
 {
-    [RoutePrefix("api/Users")]
+    [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
         private readonly IUserManager _userManager;
@@ -37,7 +37,7 @@ namespace BasicAPI.Controllers
 
         [HttpGet]
         [Route("{userID:int}")]
-        public HttpResponseMessage GetUsers(int userID)
+        public HttpResponseMessage GetUser(int userID)
         {
             if (userID <= 0)
             {
@@ -48,7 +48,7 @@ namespace BasicAPI.Controllers
 
             try
             {
-                users = _userManager.GetUsers(userID);
+                users = _userManager.GetUser(userID);
             }
             catch (Exception ex)
             {

@@ -28,21 +28,23 @@ namespace BasicAPI.Repositories.Implementation
         public List<UserEntity> AddUser(UserEntity user)
         {
             List<UserEntity> users = null;
+            int? insertedUserID = null;
 
-            using (APITestEntities db = new APITestEntities())
+            try
             {
-                try
+                using (APITestEntities db = new APITestEntities())
                 {
-                    db.AddUser(user.StudentID, user.UserFirstName, user.UserLastName);
-
-                    List<DBUser> dbUsers = db.GetUsersByStudentID(user.StudentID).ToList();
-
-                    users = _mapper.Map<List<UserEntity>>(dbUsers);
+                    insertedUserID = db.AddUser(user.StudentID, user.UserFirstName, user.UserLastName);
                 }
-                catch (Exception ex)
+
+                if (insertedUserID.HasValue)
                 {
-
+                    users = GetUser(insertedUserID.Value);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
 
             return users;
@@ -53,23 +55,37 @@ namespace BasicAPI.Repositories.Implementation
             throw new NotImplementedException();
         }
 
-        public List<UserEntity> GetUsers(int userID)
+        public List<UserEntity> GetUser(int userID)
         {
             List<UserEntity> users = null;
 
-            using (APITestEntities db = new APITestEntities())
+            try
             {
-                try
+                using (APITestEntities db = new APITestEntities())
                 {
                     List<DBUser> dbUsers = db.GetUsersByID(userID).ToList();
 
                     users = _mapper.Map<List<UserEntity>>(dbUsers);
-                }
-                catch (Exception ex)
-                {
+
+                    List<UserContactInfoEntity> userContacts = _mapper.Map<List<UserContactInfoEntity>>(dbUsers);
+
+                    foreach (UserEntity userItem in users)
+                    {
+                        userItem.UserContacts = new List<UserContactInfoEntity>();
+
+                        foreach (UserContactInfoEntity userContact in userContacts.Where(x => x.UserID == userItem.UserID))
+                        {
+                            userItem.UserContacts.Add(userContact);
+                        }
+                    }
 
                 }
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
 
             return users;
         }

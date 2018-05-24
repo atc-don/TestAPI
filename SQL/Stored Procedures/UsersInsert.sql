@@ -7,7 +7,10 @@ GO
 -- Create date: 05/24/2018
 -- Description:	Add user
 -- =============================================
-CREATE PROCEDURE UsersAdd
+
+-- DROP PROCEDURE UsersInsert
+
+CREATE PROCEDURE UsersInsert
 				@StudentID INT,
 				@UserFirstName VARCHAR(50),
 				@UserLastName VARCHAR(50)
@@ -30,5 +33,6 @@ BEGIN
 			@UserLastName
 		)
     
+	SELECT SCOPE_IDENTITY()
 END
 GO

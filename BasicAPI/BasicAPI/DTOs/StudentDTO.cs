@@ -13,7 +13,7 @@ namespace BasicAPI.DTOs
 
         public string StudentLastName { get; set; }
 
-        List<StudentContactInfoDto> StudentContacts { get; set; }
+        public List<StudentContactInfoDto> StudentContacts { get; set; }
 
         public List<UserDto> StudentUsers { get; set; }
     }

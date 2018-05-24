@@ -236,6 +236,9 @@
       <DependentUpon>APITestModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\DBStudent.cs">
+      <DependentUpon>APITestModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBUser.cs">
       <DependentUpon>APITestModel.tt</DependentUpon>
     </Compile>

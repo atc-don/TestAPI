@@ -50,6 +50,24 @@ namespace BasicAPI.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddStudent", studentFirstNameParameter, studentLastNameParameter);
         }
     
+        internal virtual ObjectResult<DBUser> GetUsersByID(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBUser>("GetUsersByID", userIDParameter);
+        }
+    
+        public virtual ObjectResult<DBStudent> StudentsGetByID(Nullable<int> studentID)
+        {
+            var studentIDParameter = studentID.HasValue ?
+                new ObjectParameter("StudentID", studentID) :
+                new ObjectParameter("StudentID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBStudent>("StudentsGetByID", studentIDParameter);
+        }
+    
         internal virtual int AddUser(Nullable<int> studentID, string userFirstName, string userLastName)
         {
             var studentIDParameter = studentID.HasValue ?
@@ -65,15 +83,6 @@ namespace BasicAPI.Models
                 new ObjectParameter("UserLastName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddUser", studentIDParameter, userFirstNameParameter, userLastNameParameter);
-        }
-    
-        internal virtual ObjectResult<DBUser> GetUsersByID(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBUser>("GetUsersByID", userIDParameter);
         }
     }
 }

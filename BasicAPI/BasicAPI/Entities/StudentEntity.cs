@@ -13,7 +13,7 @@ namespace BasicAPI.Entities
 
         public string StudentLastName { get; set; }
 
-        List<StudentContactInfoEntity> StudentContacts { get; set; }
+        public List<StudentContactInfoEntity> StudentContacts { get; set; }
 
         public List<UserEntity> StudentUsers { get; set; }
     }

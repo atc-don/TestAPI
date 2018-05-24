@@ -15,6 +15,6 @@ namespace BasicAPI.DTOs
 
         public string UserLastName { get; set; }
 
-        List<UserContactInfoDto> UserContacts { get; set; }
+        public List<UserContactInfoDto> UserContacts { get; set; }
     }
 }

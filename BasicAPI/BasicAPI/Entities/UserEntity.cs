@@ -15,6 +15,6 @@ namespace BasicAPI.Entities
 
         public string UserLastName { get; set; }
 
-        List<UserContactInfoEntity> UserContacts { get; set; }
+        public List<UserContactInfoEntity> UserContacts { get; set; }
     }
 }

@@ -7,7 +7,10 @@ GO
 -- Create date: 05/24/2018
 -- Description:	Gets Users by StudentID
 -- =============================================
-CREATE PROCEDURE StudentsAdd
+
+-- DROP PROCEDURE StudentsInsert
+
+CREATE PROCEDURE StudentsInsert
 				@StudentFirstName VARCHAR(50),
 				@StudentLastName VARCHAR(50)
 	
@@ -26,6 +29,8 @@ BEGIN
 			@StudentFirstName,
 			@StudentLastName
 		)
+
+	SELECT CAST(SCOPE_IDENTITY() AS INT) AS LastIdentity
     
 END
 GO

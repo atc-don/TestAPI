@@ -44,6 +44,8 @@ namespace BasicAPI.App_Start
             Bind<IMapper>().ToConstant(mapper).InSingletonScope();
             Bind<IUserManager>().To<UserManager>().InTransientScope();
             Bind<IUserRepository>().To<UserRepository>().InTransientScope();
+            Bind<IStudentManager>().To<StudentManager>().InTransientScope();
+            Bind<IStudentRepository>().To<StudentRepository>().InTransientScope();
         }
     }
 }

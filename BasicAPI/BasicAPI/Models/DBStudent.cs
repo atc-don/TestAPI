@@ -11,14 +11,13 @@ namespace BasicAPI.Models
 {
     using System;
     
-    internal partial class DBUser
+    public partial class DBStudent
     {
         public int StudentID { get; set; }
-        public string UserFirstName { get; set; }
-        public string UserLastName { get; set; }
-        public int UserID { get; set; }
-        public int UserContactInfoID { get; set; }
-        public string UserEmail { get; set; }
-        public string UserPhone { get; set; }
+        public string StudentFirstName { get; set; }
+        public string StudentLastName { get; set; }
+        public int StudentContactInfoID { get; set; }
+        public string StudentEmail { get; set; }
+        public string StudentPhone { get; set; }
     }
 }

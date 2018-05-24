@@ -9,7 +9,7 @@ namespace BasicAPI.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        List<UserEntity> GetUsers(int userID);
+        List<UserEntity> GetUser(int userID);
 
         List<UserEntity> AddUser(UserEntity user);
 
