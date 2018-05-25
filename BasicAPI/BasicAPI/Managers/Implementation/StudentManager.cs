@@ -22,19 +22,54 @@ namespace BasicAPI.Managers.Implementation
             _studentRepository = studentRepository;
         }
 
-        public List<StudentEntity> AddStudent(StudentEntity user)
+        public void AddStudent(StudentEntity student)
         {
-            return _studentRepository.AddStudent(user);
+            if (student == null)
+            {
+                throw new ArgumentNullException("student");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
+            _studentRepository.AddStudent(student);
         }
 
-        public StudentEntity EditStudent(StudentEntity user)
+        public StudentEntity EditStudent(StudentEntity student)
         {
-            return _studentRepository.EditStudent(user);
+            if (student == null)
+            {
+                throw new ArgumentNullException("student");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
+            return _studentRepository.EditStudent(student);
         }
 
-        public List<StudentEntity> GetStudents(int studentID)
+        public StudentEntity GetStudents(int studentID)
         {
-            return _studentRepository.GetStudents(studentID);
+            if (studentID <= 0)
+            {
+                throw new ArgumentOutOfRangeException("studentID", studentID, "Invalid studentID");
+            }
+
+            return _studentRepository.GetStudent(studentID);
         }
     }
 }

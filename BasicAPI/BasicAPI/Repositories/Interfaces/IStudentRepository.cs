@@ -9,9 +9,9 @@ namespace BasicAPI.Repositories.Interfaces
 {
     public interface IStudentRepository
     {
-        List<StudentEntity> GetStudents(int studentID);
+        StudentEntity GetStudent(int studentID);
 
-        List<StudentEntity> AddStudent(StudentEntity user);
+        void AddStudent(StudentEntity user);
 
         StudentEntity EditStudent(StudentEntity user);
     }

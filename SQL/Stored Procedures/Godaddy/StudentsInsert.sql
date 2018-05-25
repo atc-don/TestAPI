@@ -8,11 +8,11 @@ GO
 -- Description:	Gets Users by StudentID
 -- =============================================
 
-declare @procName varchar(100) = '[dbo].[StudentsInsert]'
+declare @procName varchar(100) = '[atcDevAPI].[StudentsInsert]'
 
 if object_id(@procName) is not null
 begin
-	drop procedure [dbo].[StudentsInsert]
+	drop procedure [atcDevAPI].[StudentsInsert]
 	if object_id(@procName) is not null print '>> Failure: drop procedure '+@procName else print '>> Success: drop procedure '+@procName
 end
 go
@@ -41,7 +41,7 @@ BEGIN
 
 
 	INSERT INTO 
-		dbo.Students
+		atcDevAPI.Students
 		(
 			StudentFirstName,
 			StudentLastName
@@ -52,7 +52,7 @@ BEGIN
 			@StudentLastName
 		)
 
-	INSERT INTO dbo.StudentContactInfo 
+	INSERT INTO atcDevAPI.StudentContactInfo 
 		(
 			StudentID, 
 			StudentPhone, 
@@ -67,6 +67,6 @@ BEGIN
 END
 GO
 
-declare @procName varchar(100) = '[dbo].[StudentsInsert]'
+declare @procName varchar(100) = '[atcDevAPI].[StudentsInsert]'
 if object_id(@procName) is null print '>> Failure: create procedure '+@procName else print '>> Success: create procedure '+@procName
 go

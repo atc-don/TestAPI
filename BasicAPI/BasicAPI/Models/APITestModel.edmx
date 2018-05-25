@@ -11,6 +11,7 @@
         <Function Name="StudentsInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StudentFirstName" Type="varchar" Mode="In" />
           <Parameter Name="StudentLastName" Type="varchar" Mode="In" />
+          <Parameter Name="StudentContactsXML" Type="xml" Mode="In" />
         </Function>
         <Function Name="UsersGetByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -22,6 +23,7 @@
           <Parameter Name="StudentID" Type="int" Mode="In" />
           <Parameter Name="UserFirstName" Type="varchar" Mode="In" />
           <Parameter Name="UserLastName" Type="varchar" Mode="In" />
+          <Parameter Name="UserContactsXML" Type="xml" Mode="In" />
         </Function>
         <EntityContainer Name="APITestModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -35,17 +37,19 @@
           <FunctionImport Name="AddStudent" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
             <Parameter Name="StudentFirstName" Mode="In" Type="String" />
             <Parameter Name="StudentLastName" Mode="In" Type="String" />
+            <Parameter Name="StudentContactsXML" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUsersByID" ReturnType="Collection(APITestModel.DBUser)" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="StudentsGetByID" ReturnType="Collection(APITestModel.DBStudent)">
+          <FunctionImport Name="GetStudentsByID" ReturnType="Collection(APITestModel.DBStudent)">
           <Parameter Name="StudentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AddUser" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
             <Parameter Name="StudentID" Mode="In" Type="Int32" />
             <Parameter Name="UserFirstName" Mode="In" Type="String" />
             <Parameter Name="UserLastName" Mode="In" Type="String" />
+            <Parameter Name="UserContactsXML" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DBUser" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
@@ -97,7 +101,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="StudentsGetByID" FunctionName="APITestModel.Store.StudentsGetByID">
+          <FunctionImportMapping FunctionImportName="GetStudentsByID" FunctionName="APITestModel.Store.StudentsGetByID">
             <ResultMapping>
               <ComplexTypeMapping TypeName="APITestModel.DBStudent">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />

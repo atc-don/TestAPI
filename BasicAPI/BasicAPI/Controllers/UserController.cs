@@ -44,18 +44,18 @@ namespace BasicAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid Student ID");
             }
 
-            List<UserEntity> users = null;
+            UserEntity user = null;
 
             try
             {
-                users = _userManager.GetUser(userID);
+                user = _userManager.GetUser(userID);
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Processing Error");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, users);
+            return Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
         [HttpPost]
@@ -67,22 +67,18 @@ namespace BasicAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid Student ID");
             }
 
-            List<UserDto> users = null;
-
             try
             {
                 UserEntity userEntity = _mapper.Map<UserEntity>(user);
 
-                List<UserEntity> userEntities = _userManager.AddUser(userEntity);
-
-                users = _mapper.Map<List<UserDto>>(userEntities);
+                _userManager.AddUser(userEntity);
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Processing Error");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, users);
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpPut]

@@ -8,13 +8,13 @@ GO
 -- Description:	Add user
 -- =============================================
 
-declare @procName varchar(100) = '[dbo].[UsersInsert]'
+declare @procName varchar(100) = '[atcDevAPI].[UsersInsert]'
 
 -- DROP PROCEDURE UsersInsert
 
 if object_id(@procName) is not null
 begin
-	drop procedure [dbo].[UsersInsert]
+	drop procedure [atcDevAPI].[UsersInsert]
 	if object_id(@procName) is not null print '>> Failure: drop procedure '+@procName else print '>> Success: drop procedure '+@procName
 end
 go
@@ -43,7 +43,7 @@ BEGIN
 
 
 	INSERT INTO 
-		dbo.Users
+		atcDevAPI.Users
 		(
 			StudentID,
 			UserFirstName,
@@ -57,7 +57,7 @@ BEGIN
 		)    
 
 
-	INSERT INTO dbo.UserContactInfo 
+	INSERT INTO atcDevAPI.UserContactInfo 
 		(
 			UserID, 
 			UserPhone, 
@@ -71,6 +71,6 @@ BEGIN
 END
 GO
 
-declare @procName varchar(100) = '[dbo].[UsersInsert]'
+declare @procName varchar(100) = '[atcDevAPI].[UsersInsert]'
 if object_id(@procName) is null print '>> Failure: create procedure '+@procName else print '>> Success: create procedure '+@procName
 go

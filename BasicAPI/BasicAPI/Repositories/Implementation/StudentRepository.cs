@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
-
+using System.Xml.Serialization;
 using AutoMapper;
 
 using BasicAPI.Entities;
@@ -25,57 +27,100 @@ namespace BasicAPI.Repositories.Implementation
             _mapper = mapper;
         }
 
-        public List<StudentEntity> AddStudent(StudentEntity student)
+        public void AddStudent(StudentEntity student)
         {
-            List<StudentEntity> students = null;
-            int? insertedStudentID = null;
+            if (student == null)
+            {
+                throw new ArgumentNullException("student");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
 
             try
             {
                 using (APITestEntities db = new APITestEntities())
                 {
-                    /*****PERFORM INSERT******/
-                    insertedStudentID= db.AddStudent(student.StudentFirstName, student.StudentLastName);
-                }
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<StudentContacts>");
 
-                if (insertedStudentID.HasValue)
-                {
-                    students = GetStudents(insertedStudentID.Value);
+                    foreach (StudentContactInfoEntity studentContact in student.StudentContacts)
+                    {
+                        sb.Append("<StudentContact>");
+
+                        sb.Append("<StudentPhone>" + studentContact.StudentPhone + "</StudentPhone>");
+                        sb.Append("<StudentEmail>" + studentContact.StudentEmail + "</StudentEmail>");
+
+                        sb.Append("</StudentContact>");
+                    }
+
+                    sb.Append("</StudentContacts>");
+
+                    string xmlStudentContacts = sb.ToString();
+
+                    db.AddStudent(student.StudentFirstName, student.StudentLastName, xmlStudentContacts);
                 }
             }
             catch (Exception ex)
             {
                 throw;
             }
-
-            return students;
         }
 
-        public StudentEntity EditStudent(StudentEntity user)
+        public StudentEntity EditStudent(StudentEntity student)
         {
+            if (student == null)
+            {
+                throw new ArgumentNullException("student");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
+            if (String.IsNullOrWhiteSpace(student.StudentFirstName))
+            {
+                throw new ArgumentNullException("student.StudentFirstName");
+            }
+
             throw new NotImplementedException();
         }
 
-        public List<StudentEntity> GetStudents(int studentID)
+        public StudentEntity GetStudent(int studentID)
         {
-            List<StudentEntity> students = null;
+            if (studentID <= 0)
+            {
+                throw new ArgumentOutOfRangeException("studentID", studentID, "Invalid studentID");
+            }
+
+            StudentEntity student = null;
             try
             {
                 using (APITestEntities db = new APITestEntities())
                 {
-                    List<DBUser> dbStudents = db.GetUsersByStudentID(studentID).ToList();
+                    List<DBStudent> dbStudents = db.GetStudentsByID(studentID).ToList();
 
-                    students = _mapper.Map<List<StudentEntity>>(dbStudents);
+                    List<StudentEntity> students = _mapper.Map<List<StudentEntity>>(dbStudents);
 
-                    List<StudentContactInfoEntity> userContacts = _mapper.Map<List<StudentContactInfoEntity>>(dbStudents);
+                    student = students.FirstOrDefault();
 
-                    foreach (StudentEntity studentItem in students)
+                    if (student != null)
                     {
-                        studentItem.StudentContacts = new List<StudentContactInfoEntity>();
+                        student.StudentContacts = new List<StudentContactInfoEntity>();
 
-                        foreach (StudentContactInfoEntity studentContact in userContacts.Where(x => x.StudentID == studentItem.StudentID))
+                        List<StudentContactInfoEntity> studentContacts = _mapper.Map<List<StudentContactInfoEntity>>(dbStudents);                        
+
+                        foreach (StudentContactInfoEntity studentContact in studentContacts.Where(x => x.StudentID == student.StudentID))
                         {
-                            studentItem.StudentContacts.Add(studentContact);
+                            student.StudentContacts.Add(studentContact);
                         }
                     }
                 }
@@ -85,7 +130,7 @@ namespace BasicAPI.Repositories.Implementation
                 throw;
             }
 
-            return students;
+            return student;
         }
     }
 }

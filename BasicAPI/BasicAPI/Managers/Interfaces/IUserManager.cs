@@ -10,9 +10,9 @@ namespace BasicAPI.Managers.Interfaces
 {
     public interface IUserManager
     {
-        List<UserEntity> GetUser(int studentID);
+        UserEntity GetUser(int userID);
 
-        List<UserEntity> AddUser(UserEntity user);
+        void AddUser(UserEntity user);
 
         UserEntity EditUser(UserEntity user);
     }

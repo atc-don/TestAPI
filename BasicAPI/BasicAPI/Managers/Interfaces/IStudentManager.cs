@@ -10,9 +10,9 @@ namespace BasicAPI.Managers.Interfaces
 {
     public interface IStudentManager
     {
-        List<StudentEntity> GetStudents(int studentID);
+        StudentEntity GetStudents(int studentID);
 
-        List<StudentEntity> AddStudent(StudentEntity user);
+        void AddStudent(StudentEntity user);
 
         StudentEntity EditStudent(StudentEntity user);
     }

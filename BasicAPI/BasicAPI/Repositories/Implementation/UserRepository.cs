@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using BasicAPI.Entities;
 using BasicAPI.Repositories.Interfaces;
@@ -8,6 +9,8 @@ using BasicAPI.Repositories.Interfaces;
 using AutoMapper;
 
 using BasicAPI.Models;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace BasicAPI.Repositories.Implementation
 {
@@ -25,39 +28,86 @@ namespace BasicAPI.Repositories.Implementation
             _mapper = mapper;
         }
 
-        public List<UserEntity> AddUser(UserEntity user)
+        public void AddUser(UserEntity user)
         {
-            List<UserEntity> users = null;
-            int? insertedUserID = null;
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+
+            if (user.StudentID <= 0)
+            {
+                throw new ArgumentOutOfRangeException("user.StudentID", user.StudentID, "Invalid Student ID");
+            }
+
+            if (String.IsNullOrWhiteSpace(user.UserFirstName))
+            {
+                throw new ArgumentNullException("user.UserFirstName");
+            }
+
+            if (String.IsNullOrWhiteSpace(user.UserLastName))
+            {
+                throw new ArgumentNullException("user.UserLastName");
+            }
 
             try
             {
                 using (APITestEntities db = new APITestEntities())
                 {
-                    insertedUserID = db.AddUser(user.StudentID, user.UserFirstName, user.UserLastName);
-                }
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<UserContacts>");
 
-                if (insertedUserID.HasValue)
-                {
-                    users = GetUser(insertedUserID.Value);
+                    foreach (UserContactInfoEntity userContact in user.UserContacts)
+                    {
+                        sb.Append("<UserContact>");
+
+                        sb.Append("<UserPhone>" + userContact.UserPhone + "</UserPhone>");
+                        sb.Append("<UserEmail>" + userContact.UserEmail + "</UserEmail>");
+
+                        sb.Append("</UserContact>");
+                    }
+
+                    sb.Append("</UserContacts>");
+
+                    string xmlUserContacts = sb.ToString();
+
+                    db.AddUser(user.StudentID, user.UserFirstName, user.UserLastName, xmlUserContacts);
                 }
             }
             catch (Exception ex)
             {
                 throw;
             }
-
-            return users;
         }
 
         public UserEntity EditUser(UserEntity user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+
+            if (String.IsNullOrWhiteSpace(user.UserFirstName))
+            {
+                throw new ArgumentNullException("user.UserFirstName");
+            }
+
+            if (String.IsNullOrWhiteSpace(user.UserLastName))
+            {
+                throw new ArgumentNullException("user.UserLastName");
+            }
+
             throw new NotImplementedException();
         }
 
-        public List<UserEntity> GetUser(int userID)
+        public UserEntity GetUser(int userID)
         {
-            List<UserEntity> users = null;
+            if (userID <= 0)
+            {
+                throw new ArgumentOutOfRangeException("userID", userID, "Invalid UserID");
+            }
+
+            UserEntity user = null;
 
             try
             {
@@ -65,20 +115,21 @@ namespace BasicAPI.Repositories.Implementation
                 {
                     List<DBUser> dbUsers = db.GetUsersByID(userID).ToList();
 
-                    users = _mapper.Map<List<UserEntity>>(dbUsers);
+                    List<UserEntity> users = _mapper.Map<List<UserEntity>>(dbUsers);
 
-                    List<UserContactInfoEntity> userContacts = _mapper.Map<List<UserContactInfoEntity>>(dbUsers);
+                    user = users.FirstOrDefault();
 
-                    foreach (UserEntity userItem in users)
+                    if (user != null)
                     {
-                        userItem.UserContacts = new List<UserContactInfoEntity>();
+                        user.UserContacts = new List<UserContactInfoEntity>();
 
-                        foreach (UserContactInfoEntity userContact in userContacts.Where(x => x.UserID == userItem.UserID))
+                        List<UserContactInfoEntity> userContacts = _mapper.Map<List<UserContactInfoEntity>>(dbUsers);
+
+                        foreach (UserContactInfoEntity userContact in userContacts.Where(x => x.UserID == user.UserID))
                         {
-                            userItem.UserContacts.Add(userContact);
+                            user.UserContacts.Add(userContact);
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -86,8 +137,7 @@ namespace BasicAPI.Repositories.Implementation
                 throw;
             }
 
-
-            return users;
+            return user;
         }
     }
 }

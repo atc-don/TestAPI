@@ -1,3 +1,11 @@
+--USE APITest
+--GO
+
+--DROP TABLE UserContactInfo
+--DROP TABLE Users
+--DROP TABLE StudentContactInfo
+--DROP TABLE Students
+
 
 CREATE TABLE Students
 (
@@ -11,7 +19,7 @@ CREATE TABLE StudentContactInfo
 (
 	StudentContactInfoID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	StudentID INT NOT NULL,
-	StudentPhone VARCHAR(50) NULL,
+	StudentPhone VARCHAR(25) NULL,
 	StudentEmail VARCHAR(100) NOT NULL
 )
 GO
@@ -36,7 +44,7 @@ CREATE TABLE UserContactInfo
 	UserContactInfoID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
 	UserID INT NOT NULL,
 	UserPhone VARCHAR(25) NULL,
-	UserEmail VARCHAR(50) NOT NULL	
+	UserEmail VARCHAR(100) NOT NULL	
 )
 GO
 
