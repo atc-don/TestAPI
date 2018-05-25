@@ -106,7 +106,7 @@ namespace BasicAPI.Repositories.Implementation
             {
                 using (APITestEntities db = new APITestEntities())
                 {
-                    List<DBStudent> dbStudents = db.GetStudentsByID(studentID).ToList();
+                    List<DBStudent> dbStudents = db.GetStudentByID(studentID).ToList();
 
                     List<StudentEntity> students = _mapper.Map<List<StudentEntity>>(dbStudents);
 

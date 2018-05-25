@@ -21,7 +21,7 @@ begin
 end
 go
 
-CREATE PROCEDURE UsersGetByStudentID
+CREATE PROCEDURE atcDevAPI.UsersGetByStudentID
 				@StudentID INT 
 	
 AS
@@ -39,9 +39,9 @@ BEGIN
 		uci.UserEmail,
 		uci.UserPhone
 	FROM
-		Users u
+		atcDevAPI.Users u
 	INNER JOIN
-		UserContactInfo uci ON uci.UserID = u.UserID
+		atcDevAPI.UserContactInfo uci ON uci.UserID = u.UserID
 	WHERE
 		u.StudentID = @StudentID
     

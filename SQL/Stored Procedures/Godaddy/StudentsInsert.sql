@@ -18,7 +18,7 @@ end
 go
 
 
-CREATE PROCEDURE StudentsInsert
+CREATE PROCEDURE atcDevAPI.StudentsInsert
 				@StudentFirstName VARCHAR(50),
 				@StudentLastName VARCHAR(50),
 				@StudentContactsXML XML

@@ -19,7 +19,7 @@ begin
 end
 go
 
-CREATE PROCEDURE UsersInsert
+CREATE PROCEDURE atcDevAPI.UsersInsert
 				@StudentID INT,
 				@UserFirstName VARCHAR(50),
 				@UserLastName VARCHAR(50),

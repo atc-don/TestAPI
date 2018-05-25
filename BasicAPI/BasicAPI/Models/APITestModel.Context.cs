@@ -36,7 +36,7 @@ public partial class APITestEntities : DbContext
 
 
 
-    internal virtual ObjectResult<DBUser> GetUsersByStudentID(Nullable<int> studentID)
+    internal virtual ObjectResult<DBStudent> GetStudentByID(Nullable<int> studentID)
     {
 
         var studentIDParameter = studentID.HasValue ?
@@ -44,7 +44,7 @@ public partial class APITestEntities : DbContext
             new ObjectParameter("StudentID", typeof(int));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBUser>("GetUsersByStudentID", studentIDParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBStudent>("GetStudentByID", studentIDParameter);
     }
 
 
@@ -70,7 +70,7 @@ public partial class APITestEntities : DbContext
     }
 
 
-    internal virtual ObjectResult<DBUser> GetUsersByID(Nullable<int> userID)
+    internal virtual ObjectResult<DBUser> GetUserByID(Nullable<int> userID)
     {
 
         var userIDParameter = userID.HasValue ?
@@ -78,11 +78,11 @@ public partial class APITestEntities : DbContext
             new ObjectParameter("UserID", typeof(int));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBUser>("GetUsersByID", userIDParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBUser>("GetUserByID", userIDParameter);
     }
 
 
-    public virtual ObjectResult<DBStudent> GetStudentsByID(Nullable<int> studentID)
+    internal virtual ObjectResult<DBUser> GetUsersByStudentID(Nullable<int> studentID)
     {
 
         var studentIDParameter = studentID.HasValue ?
@@ -90,7 +90,7 @@ public partial class APITestEntities : DbContext
             new ObjectParameter("StudentID", typeof(int));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBStudent>("GetStudentsByID", studentIDParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DBUser>("GetUsersByStudentID", studentIDParameter);
     }
 
 

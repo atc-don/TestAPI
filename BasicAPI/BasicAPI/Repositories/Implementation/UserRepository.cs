@@ -113,7 +113,7 @@ namespace BasicAPI.Repositories.Implementation
             {
                 using (APITestEntities db = new APITestEntities())
                 {
-                    List<DBUser> dbUsers = db.GetUsersByID(userID).ToList();
+                    List<DBUser> dbUsers = db.GetUserByID(userID).ToList();
 
                     List<UserEntity> users = _mapper.Map<List<UserEntity>>(dbUsers);
 

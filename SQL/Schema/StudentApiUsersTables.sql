@@ -1,13 +1,14 @@
 --USE APITest
 --GO
 
---DROP TABLE UserContactInfo
---DROP TABLE Users
---DROP TABLE StudentContactInfo
---DROP TABLE Students
+/*
+DROP TABLE atcDevAPI.UserContactInfo
+DROP TABLE atcDevAPI.Users
+DROP TABLE atcDevAPI.StudentContactInfo
+DROP TABLE atcDevAPI.Students
+*/
 
-
-CREATE TABLE Students
+CREATE TABLE atcDevAPI.Students
 (
 	StudentID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
 	StudentFirstName VARCHAR(50) NOT NULL,
@@ -15,7 +16,7 @@ CREATE TABLE Students
 )
 GO
 
-CREATE TABLE StudentContactInfo
+CREATE TABLE atcDevAPI.StudentContactInfo
 (
 	StudentContactInfoID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	StudentID INT NOT NULL,
@@ -24,10 +25,10 @@ CREATE TABLE StudentContactInfo
 )
 GO
 
-ALTER TABLE StudentContactInfo ADD FOREIGN KEY (StudentID) REFERENCES Students(StudentID);
+ALTER TABLE atcDevAPI.StudentContactInfo ADD FOREIGN KEY (StudentID) REFERENCES atcDevAPI.Students(StudentID);
 GO
 
-CREATE TABLE Users
+CREATE TABLE atcDevAPI.Users
 (
 	UserID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
 	StudentID INT NOT NULL,
@@ -36,10 +37,10 @@ CREATE TABLE Users
 )
 GO
 
-ALTER TABLE Users ADD FOREIGN KEY (StudentID) REFERENCES Students(StudentID);
+ALTER TABLE atcDevAPI.Users ADD FOREIGN KEY (StudentID) REFERENCES atcDevAPI.Students(StudentID);
 GO
 
-CREATE TABLE UserContactInfo
+CREATE TABLE atcDevAPI.UserContactInfo
 (
 	UserContactInfoID INT NOT NULL PRIMARY KEY  IDENTITY(1,1),
 	UserID INT NOT NULL,
@@ -48,5 +49,5 @@ CREATE TABLE UserContactInfo
 )
 GO
 
-ALTER TABLE UserContactInfo ADD FOREIGN KEY (UserID) REFERENCES Users(UserID);
+ALTER TABLE atcDevAPI.UserContactInfo ADD FOREIGN KEY (UserID) REFERENCES atcDevAPI.Users(UserID);
 GO

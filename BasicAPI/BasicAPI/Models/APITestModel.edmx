@@ -5,21 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="APITestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <Function Name="StudentsGetByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="StudentsGetByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="atcDevAPI">
           <Parameter Name="StudentID" Type="int" Mode="In" />
         </Function>
-        <Function Name="StudentsInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="StudentsInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="atcDevAPI">
           <Parameter Name="StudentFirstName" Type="varchar" Mode="In" />
           <Parameter Name="StudentLastName" Type="varchar" Mode="In" />
           <Parameter Name="StudentContactsXML" Type="xml" Mode="In" />
         </Function>
-        <Function Name="UsersGetByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="UsersGetByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="atcDevAPI">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
-        <Function Name="UsersGetByStudentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="UsersGetByStudentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="atcDevAPI">
           <Parameter Name="StudentID" Type="int" Mode="In" />
         </Function>
-        <Function Name="UsersInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="UsersInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="atcDevAPI">
           <Parameter Name="StudentID" Type="int" Mode="In" />
           <Parameter Name="UserFirstName" Type="varchar" Mode="In" />
           <Parameter Name="UserLastName" Type="varchar" Mode="In" />
@@ -31,19 +31,19 @@
     <edmx:ConceptualModels>
       <Schema Namespace="APITestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="APITestEntities" annotation:LazyLoadingEnabled="true" >
-          <FunctionImport Name="GetUsersByStudentID" ReturnType="Collection(APITestModel.DBUser)" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
-          <Parameter Name="StudentID" Mode="In" Type="Int32" />
+          <FunctionImport Name="GetStudentByID" ReturnType="Collection(APITestModel.DBStudent)" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AddStudent" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
             <Parameter Name="StudentFirstName" Mode="In" Type="String" />
             <Parameter Name="StudentLastName" Mode="In" Type="String" />
             <Parameter Name="StudentContactsXML" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetUsersByID" ReturnType="Collection(APITestModel.DBUser)" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <FunctionImport Name="GetUserByID" ReturnType="Collection(APITestModel.DBUser)" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetStudentsByID" ReturnType="Collection(APITestModel.DBStudent)">
-          <Parameter Name="StudentID" Mode="In" Type="Int32" />
+          <FunctionImport Name="GetUsersByStudentID" ReturnType="Collection(APITestModel.DBUser)" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AddUser" a:MethodAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
             <Parameter Name="StudentID" Mode="In" Type="Int32" />
@@ -75,20 +75,20 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="APITestModelStoreContainer" CdmEntityContainer="APITestEntities" >
-          <FunctionImportMapping FunctionImportName="GetUsersByStudentID" FunctionName="APITestModel.Store.UsersGetByStudentID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="APITestModel.DBUser">
+          <FunctionImportMapping FunctionImportName="GetStudentByID" FunctionName="APITestModel.Store.StudentsGetByID">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="APITestModel.DBStudent">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
-                <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserContactInfoID" ColumnName="UserContactInfoID" />
-                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
-                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="StudentContactInfoID" ColumnName="StudentContactInfoID" />
+                <ScalarProperty Name="StudentEmail" ColumnName="StudentEmail" />
+                <ScalarProperty Name="StudentPhone" ColumnName="StudentPhone" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetUsersByID" FunctionName="APITestModel.Store.UsersGetByID">
+          <FunctionImportMapping FunctionImportName="AddStudent" FunctionName="APITestModel.Store.StudentsInsert" />
+          <FunctionImportMapping FunctionImportName="GetUserByID" FunctionName="APITestModel.Store.UsersGetByID">
           <ResultMapping>
               <ComplexTypeMapping TypeName="APITestModel.DBUser">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -101,19 +101,19 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetStudentsByID" FunctionName="APITestModel.Store.StudentsGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="APITestModel.DBStudent">
+          <FunctionImportMapping FunctionImportName="GetUsersByStudentID" FunctionName="APITestModel.Store.UsersGetByStudentID">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="APITestModel.DBUser">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
-                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
-                <ScalarProperty Name="StudentContactInfoID" ColumnName="StudentContactInfoID" />
-                <ScalarProperty Name="StudentEmail" ColumnName="StudentEmail" />
-                <ScalarProperty Name="StudentPhone" ColumnName="StudentPhone" />
+                <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
+                <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserContactInfoID" ColumnName="UserContactInfoID" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="AddStudent" FunctionName="APITestModel.Store.StudentsInsert" />
           <FunctionImportMapping FunctionImportName="AddUser" FunctionName="APITestModel.Store.UsersInsert" />
         </EntityContainerMapping>
       </Mapping>
